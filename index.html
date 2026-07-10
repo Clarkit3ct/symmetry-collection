@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SYMMETRY · The Designer Collection</title>
+<style>
+:root{
+  --bg:#f4f3f1; --cream:#efe9df; --ink:#232a35; --muted:#6f747b;
+  --amber:#d99a4e; --dark:#101318; --dark2:#171c23; --line:#dcd8d0;
+  --sans:"Avenir Next","Avenir","Century Gothic","Futura","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.55}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1280px;margin:0 auto;padding:0 40px}
+@media(max-width:720px){.wrap{padding:0 20px}}
+
+/* ---------- nav ---------- */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(244,243,241,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(0,0,0,.06);transition:background .3s}
+.nav-inner{max-width:1400px;margin:0 auto;padding:0 40px;height:64px;display:flex;align-items:center;gap:36px}
+.brand{display:flex;align-items:center;gap:12px;margin-right:auto}
+.brand img{height:30px;width:30px;object-fit:cover;border-radius:4px}
+.brand span{font-size:19px;letter-spacing:.42em;font-weight:600;text-transform:uppercase;padding-left:.42em}
+.nav-links{display:flex;gap:28px;font-size:13.5px;color:var(--muted)}
+.nav-links a{padding:4px 0;border-bottom:2px solid transparent;transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a.active{color:var(--ink);border-bottom-color:var(--ink);font-weight:600}
+.nav-cta{font-size:13px;font-weight:600;border:1.5px solid var(--ink);border-radius:99px;padding:8px 18px;transition:all .2s;white-space:nowrap}
+.nav-cta:hover{background:var(--ink);color:#fff}
+@media(max-width:980px){.nav-links{display:none}}
+
+/* ---------- hero ---------- */
+header{position:relative;height:100svh;min-height:620px;display:flex;align-items:flex-end;color:#fff;overflow:hidden}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%}
+.hero-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,10,14,.82) 0%,rgba(8,10,14,.25) 45%,rgba(8,10,14,.35) 100%)}
+.hero-content{position:relative;width:100%;padding:0 40px 72px}
+@media(max-width:720px){.hero-content{padding:0 20px 64px}}
+.overline{font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:18px}
+h1{font-size:clamp(42px,7vw,88px);font-weight:500;letter-spacing:.06em;text-transform:uppercase;line-height:1.04}
+.hero-sub{margin-top:20px;font-size:clamp(16px,2vw,20px);color:rgba(255,255,255,.85);max-width:640px;font-weight:400}
+.hero-meta{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap}
+.hero-meta span{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:7px 16px;color:rgba(255,255,255,.9)}
+.scroll-cue{position:absolute;right:44px;bottom:34px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.6);writing-mode:vertical-rl;display:flex;align-items:center;gap:10px}
+.scroll-cue:after{content:"";width:1px;height:46px;background:rgba(255,255,255,.5);animation:drip 2.2s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(.2);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(.15);transform-origin:bottom}}
+
+/* ---------- intro ---------- */
+.intro{padding-top:110px;padding-bottom:30px}
+.intro-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:70px;align-items:start}
+@media(max-width:900px){.intro-grid{grid-template-columns:1fr;gap:34px}}
+.intro h2{font-size:clamp(26px,3.4vw,40px);font-weight:500;line-height:1.2;letter-spacing:.01em}
+.intro p{color:var(--muted);margin-top:16px;max-width:56ch}
+.series-key{display:grid;gap:18px}
+.series-key .k{border-top:1px solid var(--line);padding-top:16px}
+.series-key h3{font-size:13px;letter-spacing:.26em;text-transform:uppercase;color:var(--amber);font-weight:700}
+.series-key p{font-size:14.5px;color:var(--muted);margin-top:6px}
+
+/* ---------- collection sections ---------- */
+.series{padding-top:60px;padding-bottom:10px}
+.series-head{display:flex;align-items:baseline;gap:18px;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:34px}
+.series-head h2{font-size:13px;letter-spacing:.3em;text-transform:uppercase;font-weight:700}
+.series-head span{font-size:13px;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:26px;padding-bottom:40px}
+.card{cursor:pointer;background:transparent;border:none;text-align:left;font-family:inherit;color:inherit;opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.card.in{opacity:1;transform:none}
+.card .ph{position:relative;aspect-ratio:4/3.1;overflow:hidden;border-radius:6px;background:#20242b}
+.card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.6,.2,1)}
+.card:hover .ph img{transform:scale(1.045)}
+.card .ph .tag{position:absolute;left:0;right:0;bottom:0;padding:44px 18px 14px;background:linear-gradient(to top,rgba(8,10,14,.72),transparent);color:rgba(255,255,255,.92);font-size:13.5px;font-style:italic;opacity:0;transition:opacity .35s}
+.card:hover .ph .tag{opacity:1}
+.card .info{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:14px 2px 0}
+.card .info h3{font-size:17px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.card .info span{font-size:12.5px;color:var(--muted);white-space:nowrap}
+.card .view{margin-top:4px;padding:0 2px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);font-weight:700}
+
+/* ---------- band ---------- */
+.band{position:relative;margin:70px 0;color:#fff;overflow:hidden}
+.band img{width:100%;height:520px;object-fit:cover;object-position:center 55%}
+.band .shade{position:absolute;inset:0;background:linear-gradient(to right,rgba(8,10,14,.7),rgba(8,10,14,.1))}
+.band .txt{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center}
+.band .txt .inner{max-width:1280px;margin:0 auto;padding:0 40px;width:100%}
+.band h2{font-size:clamp(24px,3.4vw,40px);font-weight:500;max-width:16ch;line-height:1.25}
+.band p{margin-top:12px;color:rgba(255,255,255,.8);max-width:52ch}
+
+/* ---------- footer ---------- */
+footer{background:var(--dark);color:rgba(255,255,255,.75);margin-top:90px}
+.foot{max-width:1280px;margin:0 auto;padding:64px 40px 40px;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+@media(max-width:800px){.foot{grid-template-columns:1fr}}
+.foot .mark{font-size:18px;letter-spacing:.42em;text-transform:uppercase;color:#fff;font-weight:600}
+.foot p{font-size:13.5px;margin-top:14px;max-width:40ch}
+.foot h4{font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
+.foot li{list-style:none;font-size:13.5px;padding:3px 0;color:rgba(255,255,255,.65)}
+.legal{border-top:1px solid rgba(255,255,255,.12);padding:18px 40px;font-size:11.5px;color:rgba(255,255,255,.4);text-align:center;letter-spacing:.06em}
+
+/* ---------- modal ---------- */
+.modal{position:fixed;inset:0;z-index:100;background:var(--dark);display:none;color:#fff}
+.modal.open{display:grid;grid-template-columns:1.45fr 1fr}
+@media(max-width:920px){.modal.open{display:block;overflow-y:auto}}
+.m-gallery{position:relative;background:#0b0e12;display:flex;flex-direction:column;min-height:0}
+.m-main{flex:1;min-height:0;position:relative}
+.m-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+@media(max-width:920px){.m-gallery{height:52svh}.m-main img{object-fit:cover}}
+.m-thumbs{display:flex;gap:8px;padding:12px;background:rgba(255,255,255,.03);overflow-x:auto}
+.m-thumbs img{height:56px;width:84px;object-fit:cover;border-radius:3px;cursor:pointer;opacity:.45;transition:opacity .2s;border:1.5px solid transparent}
+.m-thumbs img.sel{opacity:1;border-color:var(--amber)}
+.m-arrow{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(10,12,16,.45);color:#fff;font-size:18px;cursor:pointer;z-index:5;transition:background .2s;backdrop-filter:blur(4px)}
+.m-arrow:hover{background:rgba(255,255,255,.16)}
+.m-prev{left:16px}.m-next{right:16px}
+.m-count{position:absolute;top:16px;left:20px;font-size:12px;letter-spacing:.2em;color:rgba(255,255,255,.65)}
+.m-panel{padding:64px 54px 40px;overflow-y:auto;background:var(--dark2)}
+@media(max-width:920px){.m-panel{padding:34px 24px 60px}}
+.m-series{font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--amber);font-weight:700}
+.m-panel h2{font-size:clamp(30px,3.2vw,44px);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:10px;line-height:1.1}
+.m-tagline{font-style:italic;color:rgba(255,255,255,.72);margin-top:10px;font-size:16.5px}
+.m-body{margin-top:22px;color:rgba(255,255,255,.82);font-size:15px}
+.m-body p+p{margin-top:12px}
+.m-sec{margin-top:26px}
+.m-sec h4{font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px}
+.m-sec li{list-style:none;padding:7px 0 7px 22px;position:relative;font-size:14.5px;color:rgba(255,255,255,.85);border-bottom:1px solid rgba(255,255,255,.07)}
+.m-sec li:before{content:"";position:absolute;left:2px;top:15px;width:8px;height:1.5px;background:var(--amber)}
+.m-mats{font-size:13.5px;color:rgba(255,255,255,.6);line-height:1.6}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+.chips span{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;border:1px solid rgba(255,255,255,.28);border-radius:99px;padding:6px 13px;color:rgba(255,255,255,.8)}
+.m-nav{display:flex;gap:12px;margin-top:34px;border-top:1px solid rgba(255,255,255,.12);padding-top:22px}
+.m-nav button{flex:1;font-family:inherit;background:transparent;border:1px solid rgba(255,255,255,.3);border-radius:4px;color:#fff;padding:12px 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:all .2s;text-align:left}
+.m-nav button small{display:block;color:rgba(255,255,255,.5);letter-spacing:.06em;text-transform:none;margin-bottom:3px;font-size:11px}
+.m-nav button:hover{background:rgba(255,255,255,.1)}
+.m-close{position:absolute;top:14px;right:18px;z-index:6;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(10,12,16,.45);color:#fff;font-size:17px;cursor:pointer;backdrop-filter:blur(4px)}
+.m-close:hover{background:rgba(255,255,255,.16)}
+.m-cta{display:inline-block;margin-top:26px;background:var(--cream);color:var(--ink);border-radius:99px;padding:12px 26px;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <img src="assets/s-mark.png" alt="" onerror="this.style.display='none'">
+      <span>Symmetry</span>
+    </a>
+    <div class="nav-links">
+      <a href="#">Residential custom</a>
+      <a href="#">Residential pre-built</a>
+      <a href="#collection" class="active">Designer Collection</a>
+      <a href="#">Commercial custom</a>
+    </div>
+    <a class="nav-cta" href="#collection">Explore the Collection</a>
+  </div>
+</nav>
+
+<header id="top">
+  <img class="hero-img" src="assets/nave-bathhouse.jpg" alt="The Nave, bathhouse suite" onerror="this.src='assets/nave-spa.jpg'">
+  <div class="hero-shade"></div>
+  <div class="hero-content wrap">
+    <div class="overline">Architectural Partnership Series · Clarkitect × Symmetry</div>
+    <h1>The Designer<br>Collection</h1>
+    <p class="hero-sub">Seven rooms built around light. Signature saunas on Symmetry's proven chassis, designed to be felt before they are explained.</p>
+    <div class="hero-meta"><span>7 Collections</span><span>2 Series</span><span>Built to order</span></div>
+  </div>
+  <div class="scroll-cue">Scroll</div>
+</header>
+
+<section class="intro wrap" id="collection">
+  <div class="intro-grid">
+    <div class="reveal">
+      <h2>One signature move on a clean base. That is the whole idea.</h2>
+      <p>Every room in the collection starts from the same platform: CLT and tongue-and-groove construction, benches on the proven heater datum, floors that drain and clean. Then each one commits to a single architectural gesture, carried in light.</p>
+    </div>
+    <div class="series-key reveal">
+      <div class="k">
+        <h3>Sanctuary Series</h3>
+        <p>Ritual-led rooms. The Nave, Lineate, and Gather shape how a sauna session feels, from first threshold to last pour.</p>
+      </div>
+      <div class="k">
+        <h3>Technic Series</h3>
+        <p>System-led rooms. Vesuvius, Gathering Light, Himalayan Canopy, and Interlock push material and modular craft.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="series wrap">
+  <div class="series-head"><h2>Sanctuary Series</h2><span>03 rooms</span></div>
+  <div class="cards" id="cards-sanctuary"></div>
+</section>
+
+<div class="band reveal">
+  <img src="assets/gather-cone.jpg" alt="Gather, firelight through the dowel cone" onerror="this.closest('.band').style.display='none'">
+  <div class="shade"></div>
+  <div class="txt"><div class="inner">
+    <h2>Rooms that hold people, not just heat.</h2>
+    <p>Firelight through cedar dowels. A line of light between two arches. A ceiling folded into soft waves. The detail is the destination.</p>
+  </div></div>
+</div>
+
+<section class="series wrap">
+  <div class="series-head"><h2>Technic Series</h2><span>04 rooms</span></div>
+  <div class="cards" id="cards-technic"></div>
+</section>
+
+<footer>
+  <div class="foot">
+    <div>
+      <div class="mark">Symmetry</div>
+      <p>The Designer Collection is an architectural partnership between Symmetry Sauna and Clarkitect. Concept presentation, July 2026.</p>
+    </div>
+    <div>
+      <h4>Collections</h4>
+      <ul id="foot-list"></ul>
+    </div>
+    <div>
+      <h4>Process</h4>
+      <ul>
+        <li>Concept and design</li>
+        <li>Materials with Thermory</li>
+        <li>Engineering with Auroom</li>
+        <li>Sample in six weeks</li>
+        <li>Built to order, 14 to 16 weeks</li>
+      </ul>
+    </div>
+  </div>
+  <div class="legal">Renders are design studies. Dimensions and materials finalized in engineering. · SYMMETRY × CLARKITECT</div>
+</footer>
+
+<!-- detail modal -->
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <div class="m-gallery">
+    <button class="m-close" id="mClose" aria-label="Close">✕</button>
+    <div class="m-count" id="mCount"></div>
+    <div class="m-main"><img id="mImg" src="" alt=""></div>
+    <button class="m-arrow m-prev" id="mPrev" aria-label="Previous image">‹</button>
+    <button class="m-arrow m-next" id="mNext" aria-label="Next image">›</button>
+    <div class="m-thumbs" id="mThumbs"></div>
+  </div>
+  <div class="m-panel" id="mPanel">
+    <div class="m-series" id="mSeries"></div>
+    <h2 id="mName"></h2>
+    <div class="m-tagline" id="mTag"></div>
+    <div class="m-body" id="mBody"></div>
+    <div class="m-sec"><h4>Signature</h4><ul id="mSig"></ul></div>
+    <div class="m-sec"><h4>Materials</h4><div class="m-mats" id="mMats"></div></div>
+    <div class="chips" id="mChips"></div>
+    <button class="m-cta">Request this room</button>
+    <div class="m-nav">
+      <button id="mPrevC"><small>Previous</small><span></span></button>
+      <button id="mNextC"><small>Next</small><span></span></button>
+    </div>
+  </div>
+</div>
+
+<script>
+const COLLECTIONS = [
+  {
+    id:"nave", name:"The Nave", series:"Sanctuary Series",
+    tagline:"Chapel light, craft build. Center yourself.",
+    card:"assets/nave-spa.jpg",
+    gallery:["assets/nave-spa.jpg","assets/nave-bathhouse.jpg","assets/bathhouse-suite.jpg","assets/nave-terrace.jpg","assets/nave-interior.jpg","assets/nave-front.jpg"],
+    body:[
+      "The Nave is built around one moment: stepping through a low arch into a room where a single line of warm light holds the center. Twin arched openings sit in a pale wood front over a dark plank base, and the light slot between them reads from across a yard or down a hallway.",
+      "Inside, two bench tiers ride the standard heater datum on hidden brackets, and the arch soffit washes warm light down the walls. It wants a tall room or an outdoor pad where the height can breathe."
+    ],
+    sig:["The center light slot between twin arches","Threshold compressed to a three-inch portal step","Arch soffit washes light down the walls"],
+    mats:"Thermo-aspen field walls, thermo-ash arches and wainscot, frosted slot lens with high-heat LED, CLT + T&G shell, EPDM + duckboard floor.",
+    chips:["2-4 people","Outdoor / tall rooms","Sanctuary Series"]
+  },
+  {
+    id:"lineate", name:"Lineate", series:"Sanctuary Series",
+    tagline:"The quiet one. One detail, repeated until it sings.",
+    card:"assets/lineate-interior.jpg",
+    gallery:["assets/lineate-interior.jpg","assets/lineate-ceiling.jpg","assets/lineate-front.jpg","assets/lineate-patio.jpg","assets/lineate-courtyard.jpg"],
+    body:[
+      "Lineate takes one detail and lets it carry the whole room. The taive facet profile, borrowed from the backrest where it usually hides, runs across the ceiling as continuous folded ribs, and a concealed strip in each fold turns the ceiling into soft waves of light.",
+      "Everything below stays quiet: fine-grooved walls, a two-tier bench with a slim plank edge, a tower heater in the corner. One milled profile, repeated with jigs on a standard box, and the room feels custom the moment the light comes on."
+    ],
+    sig:["Taive-rib ceiling, a warm light in every fold","Fine-groove walls keep the field calm","Slim butcher-block bench edge with hidden supports"],
+    mats:"Milled taive rib stock sourced direct through Thermory, fine-groove wall panels, 2-inch butcher-block benches with LED groove, tower heater.",
+    chips:["2-3 people","Indoor compact","Sanctuary Series"]
+  },
+  {
+    id:"gather", name:"Gather", series:"Sanctuary Series",
+    tagline:"The event sauna. Fire in the middle, everyone around it.",
+    card:"assets/gather-cone.jpg",
+    gallery:["assets/gather-cone.jpg","assets/gather-alt.jpg"],
+    body:[
+      "Gather is the event sauna. A circular wood-fired heater sits in the middle of the room, and a cone of cedar dowels flares from the heater to the ceiling, so the firelight plays through the slats and moves across the walls. A shallow ring of still water sits inset in the floor around the plinth, catching the flames and doubling them.",
+      "Benches wrap the perimeter and everyone faces the fire. A cove of warm light traces the ceiling edge, and the V3.2 variant hangs a field of undulating dowels overhead like rain caught mid-fall."
+    ],
+    sig:["Cedar dowel cone over a wood-fired column heater","Reflecting ring inset in the floor","Perimeter benches, every seat facing the fire"],
+    mats:"Wood-fired column heater with custom guard, cedar dowel cone, blackened steel bands, slate floor with recessed water ring, heat-rated cove LED, thermo-spruce benches.",
+    chips:["8-14 people","Studio / event","Sanctuary Series"]
+  },
+  {
+    id:"vesuvius", name:"Vesuvius", series:"Technic Series",
+    tagline:"Dark, protective, restorative. Lit from within.",
+    card:"assets/vesuvius-night.jpg",
+    gallery:["assets/vesuvius-night.jpg","assets/vesuvius-interior.jpg","assets/technic-row.jpg"],
+    body:[
+      "Inspired by volcanic landscapes, Vesuvius is a dark, immersive retreat that feels both protective and restorative. Concealed lighting beneath the sculpted benches rises across a bed of dark volcanic stone, so the warmth reads as coming from within.",
+      "A rounded ceiling coffer keeps the room soft inside the dark shell, and expansive glazing sets the intimate interior against the view beyond."
+    ],
+    sig:["Under-bench glow across a volcanic stone bed","Charred shou sugi ban shell, glass front","Sculpted benches and rounded ceiling coffer"],
+    mats:"Charred shou sugi ban cedar shell, thermo-ash sculpted benches, black volcanic stone bed, full-height tempered glazing, EPDM + duckboard floor.",
+    chips:["3-4 people","Outdoor view sites","Technic Series"]
+  },
+  {
+    id:"gatheringlight", name:"Gathering Light", series:"Technic Series",
+    tagline:"The octagon that puts people face to face.",
+    card:"assets/gatheringlight-gold.jpg",
+    gallery:["assets/gatheringlight-gold.jpg","assets/gatheringlight-night.jpg"],
+    body:[
+      "An octagonal plan brings people naturally face to face while framing the view beyond. The perforated ceiling wraps down onto the upper walls and glows from behind like a night sky, dimming gently as it falls.",
+      "The bench ring mirrors the eight-sided plan so the seating itself carries the architecture, and cork details bring a warm, tactile contrast to the pale wood."
+    ],
+    sig:["Night-sky perforated ceiling, wrapped onto the walls","Bench ring mirrors the octagonal plan","Cork accents, warm against pale wood"],
+    mats:"Thermo-aspen walls, backlit perforated ceiling panels with heat-rated LED, cork bench and backrest accents, stone-clad bench base, tower heater.",
+    chips:["4-6 people","Indoor / outdoor","Technic Series"]
+  },
+  {
+    id:"himalayan", name:"Himalayan Canopy", series:"Technic Series",
+    tagline:"Light, texture, craft. All overhead.",
+    card:"assets/himalayan-salt.jpg",
+    gallery:["assets/himalayan-salt.jpg","assets/himalayan-salt-wall.jpg","assets/himalayan-ext.jpg"],
+    body:[
+      "A sculptural coffered ceiling of deep wood baffles frames backlit Himalayan salt panels, filling the room with a warm natural glow that becomes the defining feature. The walls stay clean and large-format so the canopy carries the space.",
+      "Transforming benches shift into reclining lounges beneath the glow, and a high exterior window offers a glimpse of the lit ceiling from outside, drawing people toward the room."
+    ],
+    sig:["Backlit salt panels in a deep baffle grid","Transforming benches become recliners","High window teases the glow from outside"],
+    mats:"Deep wood baffle grid, backlit Himalayan salt panels, large-format thermo-spruce wall panels, transforming bench hardware, high ribbon glazing.",
+    chips:["3-4 people","Indoor","Technic Series"]
+  },
+  {
+    id:"interlock", name:"Interlock", series:"Technic Series",
+    tagline:"The system. Curves on a modular chassis.",
+    card:"assets/interlock-court.jpg",
+    gallery:["assets/interlock-court.jpg","assets/interlock-interior.jpg","assets/interlock-fins.jpg"],
+    body:[
+      "A pair of sweeping curves softens the rectangular form and shapes interlocking benches that guide movement through the room. A concealed light line traces the curve where wall rolls into ceiling.",
+      "The system expands or contracts through interchangeable modules, from a compact two-person room to a connected gathering suite, all in one architectural language, wrapped in vertical fins."
+    ],
+    sig:["Interlocking curved benches guide the room","Light line traces the curved corner","Modules combine: compact to gathering suite"],
+    mats:"Vertical spruce fin wrap, CLT + T&G modular chassis, interchangeable thermo-aspen bench modules, concealed heat-rated LED cove, tower heater.",
+    chips:["2-8+ people","Modular line","Technic Series"]
+  }
+];
+
+/* ---------- cards ---------- */
+function cardHTML(c,i){
+  return `<button class="card" data-i="${i}" aria-label="Open ${c.name}">
+    <div class="ph"><img loading="lazy" src="${c.card}" alt="${c.name}" onerror="this.closest('.card').style.display='none'"><div class="tag">${c.tagline}</div></div>
+    <div class="info"><h3>${c.name}</h3><span>${c.chips[0]} · ${c.chips[1]}</span></div>
+    <div class="view">View room →</div>
+  </button>`;
+}
+const sanc = document.getElementById('cards-sanctuary');
+const tech = document.getElementById('cards-technic');
+COLLECTIONS.forEach((c,i)=>{
+  (c.series.startsWith('Sanctuary')?sanc:tech).insertAdjacentHTML('beforeend',cardHTML(c,i));
+});
+document.getElementById('foot-list').innerHTML = COLLECTIONS.map((c,i)=>`<li style="cursor:pointer" onclick="openModal(${i})">${c.name}</li>`).join('');
+
+/* ---------- reveal on scroll ---------- */
+const io = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.card,.reveal').forEach(el=>io.observe(el));
+
+/* ---------- modal ---------- */
+let cur=0, imgIdx=0, liveGallery=[];
+const modal=document.getElementById('modal');
+const mImg=document.getElementById('mImg');
+
+function probe(src){return new Promise(res=>{const im=new Image();im.onload=()=>res(src);im.onerror=()=>res(null);im.src=src;});}
+
+async function openModal(i){
+  cur=i; imgIdx=0;
+  const c=COLLECTIONS[i];
+  const results=await Promise.all(c.gallery.map(probe));
+  liveGallery=results.filter(Boolean);
+  if(!liveGallery.length) liveGallery=[c.card];
+  document.getElementById('mSeries').textContent=c.series;
+  document.getElementById('mName').textContent=c.name;
+  document.getElementById('mTag').textContent=c.tagline;
+  document.getElementById('mBody').innerHTML=c.body.map(p=>`<p>${p}</p>`).join('');
+  document.getElementById('mSig').innerHTML=c.sig.map(s=>`<li>${s}</li>`).join('');
+  document.getElementById('mMats').textContent=c.mats;
+  document.getElementById('mChips').innerHTML=c.chips.map(s=>`<span>${s}</span>`).join('');
+  const prev=COLLECTIONS[(i-1+COLLECTIONS.length)%COLLECTIONS.length];
+  const next=COLLECTIONS[(i+1)%COLLECTIONS.length];
+  document.querySelector('#mPrevC span').textContent=prev.name;
+  document.querySelector('#mNextC span').textContent=next.name;
+  renderThumbs(); setImg(0);
+  modal.classList.add('open');
+  document.body.style.overflow='hidden';
+  document.getElementById('mPanel').scrollTop=0;
+}
+function renderThumbs(){
+  document.getElementById('mThumbs').innerHTML=liveGallery.map((g,j)=>`<img src="${g}" data-j="${j}" class="${j===0?'sel':''}" alt="">`).join('');
+}
+function setImg(j){
+  imgIdx=(j+liveGallery.length)%liveGallery.length;
+  mImg.src=liveGallery[imgIdx];
+  document.getElementById('mCount').textContent=`${String(imgIdx+1).padStart(2,'0')} / ${String(liveGallery.length).padStart(2,'0')}`;
+  document.querySelectorAll('.m-thumbs img').forEach(t=>t.classList.toggle('sel',+t.dataset.j===imgIdx));
+}
+function closeModal(){modal.classList.remove('open');document.body.style.overflow='';}
+
+document.addEventListener('click',e=>{
+  const card=e.target.closest('.card'); if(card){openModal(+card.dataset.i);return;}
+  const th=e.target.closest('.m-thumbs img'); if(th){setImg(+th.dataset.j);return;}
+});
+document.getElementById('mClose').onclick=closeModal;
+document.getElementById('mPrev').onclick=()=>setImg(imgIdx-1);
+document.getElementById('mNext').onclick=()=>setImg(imgIdx+1);
+document.getElementById('mPrevC').onclick=()=>openModal((cur-1+COLLECTIONS.length)%COLLECTIONS.length);
+document.getElementById('mNextC').onclick=()=>openModal((cur+1)%COLLECTIONS.length);
+document.addEventListener('keydown',e=>{
+  if(!modal.classList.contains('open'))return;
+  if(e.key==='Escape')closeModal();
+  if(e.key==='ArrowLeft')setImg(imgIdx-1);
+  if(e.key==='ArrowRight')setImg(imgIdx+1);
+});
+</script>
+</body>
+</html>
